@@ -14,10 +14,15 @@
 	(?` . ?`)
 	(?\{ . ?\})))
 
+(setq visible-bell 1)  ;; lets check this out
+(setq ring-bell-function 'ignore)
+
 (electric-pair-mode 1)
 (save-place-mode)
 (global-subword-mode 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(global-set-key (kbd "C-c r") 'revert-buffer)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t)
@@ -37,7 +42,8 @@
   (interactive)
    (if (= (point) (progn (back-to-indentation) (point)))
        (beginning-of-line)))
-(global-set-key (kbd "C-q") 'intendation-or-begin)
+;; There was C-q binding but I need it for an avy-goto-char
+(global-set-key (kbd "C-a") 'intendation-or-begin)
 
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
@@ -49,3 +55,17 @@
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (member lang '("python" "emacs-lisp"))))
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)

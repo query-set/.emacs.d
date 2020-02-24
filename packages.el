@@ -5,7 +5,8 @@
       use-package-verbose t)
 
 (use-package which-key
-  :ensure t)
+  :ensure t
+  :config (which-key-mode))
 
 (use-package json-mode
   :ensure t)
@@ -35,6 +36,16 @@
 (use-package elpy
   :ensure t
   :config (elpy-enable))
+
+;; (use-package flycheck
+;;   :ensure t
+;;   :init (global-flycheck-mode))
+
+;; (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake 'flymake--backend-state)
+;; (global-flycheck-mode 0)
+(use-package avy
+  :ensure t
+  :bind ("C-q" . avy-goto-char))
 
 (use-package company
   :bind (("C-." . company-complete))

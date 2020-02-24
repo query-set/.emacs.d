@@ -1,5 +1,8 @@
  ;;; -*- lexical-binding: t -*-
 
+
+;;; Code:
+
 (setq gc-cons-threshold 32000000
       garbage-collection-messages t)
 (setq max-lisp-eval-depth 2000)
@@ -19,9 +22,17 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(load "~/.emacs.d/packages" nil t)
-(load "~/.emacs.d/appearance" nil t)
-(load "~/.emacs.d/behavior" nil t)
+(load "~/.emacs.d/packages.el" nil t)
+(load "~/.emacs.d/appearance.el" nil t)
+(load "~/.emacs.d/behavior.el" nil t)
+(load "~/.emacs.d/sql.el" nil t)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
+
+
+;;;; list of really interesting emacs dotfiles
+;; https://gitlab.com/jessieh/dot-emacs/blob/master/init.el
+
+(provide 'init)
+;;; init.el ends here
