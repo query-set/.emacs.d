@@ -9,7 +9,7 @@
  '(company-tooltip-limit 20)
  '(package-selected-packages
    (quote
-    (sql-indent avy flycheck smooth-scrolling mood-one-theme mood-line json-mode which-key exec-path-from-shell elpy swiper flx-ido use-package))))
+    (all-the-icons doom-modeline ein blacken py-autopep8 magit docker-tramp sql-indent avy flycheck smooth-scrolling mood-one-theme mood-line json-mode which-key exec-path-from-shell elpy swiper flx-ido use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

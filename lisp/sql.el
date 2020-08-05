@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defun sql-find-sqli-buffer (&optional product connection)
   "Returns the name of the current default SQLi buffer or nil.
 In order to qualify, the SQLi buffer must be alive, be in
@@ -25,7 +27,4 @@ In order to qualify, the SQLi buffer must be alive, be in
 	(server :default "/var/run/postgresql")
 	(port :default 5432)))
 
-
-(use-package sql-indent)
-(eval-after-load "sql"
-  '(load-library "sql-indent"))
+;;; sql.el ends here
