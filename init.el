@@ -76,6 +76,7 @@
 ;;; List of really interesting Emacs dotfiles
 ;; https://gitlab.com/jessieh/dot-emacs/blob/master/init.el
 ;; https://git.sr.ht/~jakob/.emacs.d/tree/master/init.el
+;; https://github.com/angrybacon/dotemacs/blob/master/dotemacs.org
 
 (provide 'init)
 ;;; init.el ends here
