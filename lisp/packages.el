@@ -89,13 +89,13 @@
   :ensure t)
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config (global-set-key (kbd "C-x g") 'magit-status))
 
 (use-package autorevert
   ;; Automatically revert buffers and dired listings when something on disk
   ;; changes.
-  :config
-  (global-auto-revert-mode 1)
+  :config (global-auto-revert-mode 1)
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 

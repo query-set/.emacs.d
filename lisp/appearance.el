@@ -7,6 +7,7 @@
 (fringe-mode -1)
 
 (global-display-line-numbers-mode)
+(show-paren-mode)
 
 (use-package smooth-scrolling
   :demand
@@ -15,13 +16,6 @@
   (smooth-scroll-margin 6)
   :config
   (smooth-scrolling-mode t))
-
-;; (use-package mood-line
-;;   :ensure t
-;;   :config (mood-line-mode))
-
-;; (use-package mood-one-theme
-;;   :demand t)
 
 (use-package doom-themes
   :config
@@ -39,5 +33,5 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
-(add-to-list 'default-frame-alist '(font . "Roboto Mono-11"))
+(add-to-list 'default-frame-alist '(font . "Roboto Mono-14"))
 ;;; appearance.el ends here

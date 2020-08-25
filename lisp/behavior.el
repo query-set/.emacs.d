@@ -47,4 +47,7 @@
 ;; Most *NIX tools work best when files are terminated with a newline.
 (setq require-final-newline t)
 
+;; Allow replacing highlighted text with what one type
+(delete-selection-mode 1)
+
 ;;; behavior.el ends here

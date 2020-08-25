@@ -1,8 +1,5 @@
-;;; package --- Summary
-;;; Commentary:
-;;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t -*-
 
-;;; Code:
 (defvar init-file/gc-cons-threshold 8000000)
 (defvar init-file/gc-cons-percentage 0.1)
 
@@ -27,6 +24,10 @@
 
 ;; Collect all garbage whenever Emacs loses focus.
 (add-hook 'focus-out-hook #'garbage-collect)
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (require 'package)
 (defmacro append-to-list (target suffix)
