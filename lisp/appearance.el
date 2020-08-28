@@ -33,5 +33,7 @@
   :ensure t
   :init (doom-modeline-mode 1))
 
-(add-to-list 'default-frame-alist '(font . "Roboto Mono-14"))
+;;(add-to-list 'default-frame-alist '(font . "Roboto Mono-14:light"))
+(add-to-list 'default-frame-alist '(font . "Consolas-14"))
+
 ;;; appearance.el ends here

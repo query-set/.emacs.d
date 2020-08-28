@@ -99,4 +99,7 @@
   (setq global-auto-revert-non-file-buffers t
         auto-revert-verbose nil))
 
+(use-package restclient
+  :ensure t)
+
 ;;; packages.el ends here
