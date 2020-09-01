@@ -24,16 +24,16 @@
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-city-lights t))
 
-(use-package all-the-icons)
-
-;; Don’t compact font caches during GC.
-(setq inhibit-compacting-font-caches t)
+(use-package all-the-icons
+  :ensure t
+  ;; Don’t compact font caches during GC.
+  :config
+  (setq inhibit-compacting-font-caches t))
 
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
 
-;;(add-to-list 'default-frame-alist '(font . "Roboto Mono-14:light"))
 (add-to-list 'default-frame-alist '(font . "Consolas-14"))
 
 ;;; appearance.el ends here
