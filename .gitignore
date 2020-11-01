@@ -1,5 +1,11 @@
 ido.last
+ido.last~
+eln-cache/
+request/
+url/
+esup.log
 session.*
+.mc-lists.el
 auto-save-list/
 places
 elpy/
