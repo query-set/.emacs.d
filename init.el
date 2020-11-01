@@ -6,7 +6,7 @@
 ;; Define some functions for deferring and restoring Emacs' garbage collection facilities.
 (defun defer-garbage-collection ()
   "Set the garbage collection threshold to the highest possible for collection avoidance."
-  (setq gc-cons-threshold most-positive-fixnum
+  (setq gc-cons-threshold (* 50 1000 1000) ;; most-positive-fixnum
         gc-cons-percentage 0.6))
 (defun restore-garbage-collection ()
   "Restore the garbage collection threshold parameters in a deferred fashion."
@@ -25,9 +25,9 @@
 ;; Collect all garbage whenever Emacs loses focus.
 (add-hook 'focus-out-hook #'garbage-collect)
 
-(require 'server)
-(unless (server-running-p)
-  (server-start))
+;; (require 'server)
+;; (unless (server-running-p)
+;;   (server-start))
 
 (require 'package)
 (defmacro append-to-list (target suffix)

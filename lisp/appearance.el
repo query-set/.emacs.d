@@ -5,24 +5,23 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (fringe-mode -1)
-
-(global-display-line-numbers-mode)
-(show-paren-mode)
-
-(use-package smooth-scrolling
-  :demand
-  t
-  :custom
-  (smooth-scroll-margin 6)
-  :config
-  (smooth-scrolling-mode t))
+(global-display-line-numbers-mode 1)
+(show-paren-mode 1)
+(electric-pair-mode t)
 
 (use-package doom-themes
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-city-lights t))
+  (setq doom-themes-enable-bold t    ; bold is universally disabled
+        doom-themes-enable-italic t) ; italics is universally disabled
+  (load-theme 'doom-oceanic-next t))
+;; :dark doom-city-lights
+;; :light doom-one-light adwaita
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-height 40))
 
 (use-package all-the-icons
   :ensure t
@@ -30,10 +29,13 @@
   :config
   (setq inhibit-compacting-font-caches t))
 
-(use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+(defun enable-doom-modeline-icons (_frame)
+  (setq doom-modeline-icon t))
 
-(add-to-list 'default-frame-alist '(font . "Consolas-14"))
+(add-hook 'after-make-frame-functions
+          #'enable-doom-modeline-icons)
+
+(add-to-list 'default-frame-alist
+	     '(font . "SF Mono Powerline-11:light"))
 
 ;;; appearance.el ends here

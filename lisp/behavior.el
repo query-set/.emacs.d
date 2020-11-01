@@ -38,6 +38,8 @@
  'org-babel-load-languages
  '((python . t)))
 
+(add-hook 'prog-mode-hook 'subword-mode)
+
 ;; "Command attempted to use minibuffer while in minibuffer" gets old fast.
 (setq enable-recursive-minibuffers t)
 
@@ -49,5 +51,7 @@
 
 ;; Allow replacing highlighted text with what one type
 (delete-selection-mode 1)
+
+(setq jit-lock-defer-time 0.05)
 
 ;;; behavior.el ends here

@@ -42,6 +42,12 @@
   :ensure t
   :config (elpy-enable))
 
+(use-package jedi
+  :ensure t
+  :init
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (add-hook 'python-mode-hook 'jedi:ac-setup))
+
 (use-package py-autopep8
   :ensure t
   :hook ('elpy-mode-hook 'py-autopep8-enable-on-save))
@@ -49,43 +55,52 @@
 (use-package blacken
   :ensure t)
 
-(use-package ein)
+(require 'ein)
+(require 'ein-notebook)
+;; (require 'ein-subpackages)
 
+;; That shit is really annoying...
 ;; (use-package flycheck
 ;;   :ensure t
 ;;   :init (global-flycheck-mode)
-;;   ;;:hook (add-hook 'elpy-mode-hook 'flycheck-mode)
-;;   )
+;;   :hook (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake 'flymake--backend-state)
 ;; (global-flycheck-mode 1)
+
+(use-package multiple-cursors
+  :ensure t
+  :config (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
 
 (use-package avy
   :ensure t
   :bind ("C-q" . avy-goto-char))
 
-(use-package company
-  :bind (("C-." . company-complete))
-  :diminish company-mode
-  :custom
-  (company-dabbrev-downcase nil "Don't downcase returned candidates.")
-  (company-show-numbers t "Numbers are helpful.")
-  (company-tooltip-limit 20 "The more the merrier.")
-  (company-abort-manual-when-too-short t "Be less enthusiastic about completion.")
-  :config
-  ;; Jump faster.
-  (setq company-idle-delay 0)
-  ;; Company mode in all buffers by default.
-  (add-hook 'after-init-hook 'global-company-mode)
+;; (use-package company
+;;   :bind (("C-." . company-complete))
+;;   :diminish company-mode
+;;   :custom
+;;   (company-dabbrev-downcase nil "Don't downcase returned candidates.")
+;;   (company-show-numbers t "Numbers are helpful.")
+;;   (company-tooltip-limit 20 "The more the merrier.")
+;;   (company-abort-manual-when-too-short t "Be less enthusiastic about completion.")
+;;   :config
+;;   ;; Jump faster.
+;;   (setq company-idle-delay 0)
+;;   ;; Company mode in all buffers by default.
+;;   (add-hook 'after-init-hook 'global-company-mode)
 
-  ;; Use numbers 0-9 to select company completion candidates.
-  (let ((map company-active-map))
-    (mapc (lambda (x) (define-key map (format "%d" x)
-                        `(lambda () (interactive) (company-complete-number ,x))))
-          (number-sequence 0 9))))
-(global-set-key (kbd "C-c c") 'global-company-mode)
+;;   ;; Use numbers 0-9 to select company completion candidates.
+;;   (let ((map company-active-map))
+;;     (mapc (lambda (x) (define-key map (format "%d" x)
+;;                         `(lambda () (interactive) (company-complete-number ,x))))
+;;           (number-sequence 0 9))))
+;; (global-set-key (kbd "C-c c") 'global-company-mode)
 
 (use-package docker-tramp
+  :ensure t)
+
+(use-package dockerfile-mode
   :ensure t)
 
 (use-package magit
@@ -101,5 +116,31 @@
 
 (use-package restclient
   :ensure t)
+
+(use-package cider
+  :ensure t)
+
+(use-package git-identity
+  :after magit
+  :config
+  (git-identity-magit-mode 1)
+  ;; Bind I to git-identity-info in magit-status
+  (define-key magit-status-mode-map (kbd "I") 'git-identity-info)
+  :custom
+  ;; Warn if the global identity setting violates your policy
+  (git-identity-verify t)
+  ;; The default user name
+  (git-identity-default-username "query-set"))
+
+;; And set git-identity-list in your custom-file or init file
+(setq git-identity-list
+      '(("j3k.walczak@gmail.com"
+	 :name "query-set"
+         :domains ("github.com")
+         :dirs ("~/.emacs.d" "~/exercism"))
+        ("jacek.walczak@profil-software.com"
+	 :name "jacek-walczak-profil-software"
+         :domains ("github.com")
+         :dirs ("~/work"))))
 
 ;;; packages.el ends here
