@@ -19,20 +19,14 @@
 (setq electric-pair-pairs
       '(
 	(?` . ?`)
-	(?\{ . ?\})))
+	(?\{ . ?\})
+	;; I wish to add ({# . #}) and ({% . %}) someday
+	))
 
 (save-place-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;;;; Python config
-;; Use IPython for REPL
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console --simple-prompt"
-      python-shell-prompt-detect-failure-warning nil)
-(add-to-list 'python-shell-completion-native-disabled-interpreters
-             "jupyter")
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -53,5 +47,7 @@
 (delete-selection-mode 1)
 
 (setq jit-lock-defer-time 0.05)
+
+(setq js-indent-level 2)
 
 ;;; behavior.el ends here

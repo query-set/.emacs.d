@@ -1,48 +1,37 @@
 ;; -*- lexical-binding: t -*-
 
-(defvar init-file/gc-cons-threshold 8000000)
-(defvar init-file/gc-cons-percentage 0.1)
-
-;; Define some functions for deferring and restoring Emacs' garbage collection facilities.
-(defun defer-garbage-collection ()
-  "Set the garbage collection threshold to the highest possible for collection avoidance."
-  (setq gc-cons-threshold (* 50 1000 1000) ;; most-positive-fixnum
-        gc-cons-percentage 0.6))
-(defun restore-garbage-collection ()
-  "Restore the garbage collection threshold parameters in a deferred fashion."
-  (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold init-file/gc-cons-threshold
-                          gc-cons-percentage init-file/gc-cons-percentage))))
-
-;; Defer garbage collection while Emacs is starting and restore the threshold to 8MB when we're done.
-(defer-garbage-collection)
-(add-hook 'emacs-startup-hook #'restore-garbage-collection)
-
-;; Similarly raise and restore the garbage collection threshold for minibuffer commands.
-(add-hook 'minibuffer-setup-hook #'defer-garbage-collection)
-(add-hook 'minibuffer-exit-hook #'restore-garbage-collection)
-
-;; Collect all garbage whenever Emacs loses focus.
-(add-hook 'focus-out-hook #'garbage-collect)
-
-;; (require 'server)
-;; (unless (server-running-p)
-;;   (server-start))
-
+;;; Package management.
 (require 'package)
+
 (defmacro append-to-list (target suffix)
   "Append SUFFIX to TARGET in place."
   `(setq ,target (append ,target ,suffix)))
 
 (append-to-list package-archives
-                '(("melpa" . "http://melpa.org/packages/")
-                  ("melpa-stable" . "http://stable.melpa.org/packages/")
-                  ("org-elpa" . "https://orgmode.org/elpa/")))
+                '(("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
+
+;;; Garbage collector.
+
+(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-percentage 0.6)
+
+;; https://gitlab.com/koral/gcmh/
+(use-package gcmh :defer t)
+(add-hook 'emacs-startup-hook
+  (lambda ()
+    (setq gc-cons-threshold 33554432) ; 16mb
+    (setq gc-cons-percentage 0.1)
+    (require 'gcmh)
+    (gcmh-mode 1)))
+
+
+;;; Modules.
 
 (defvar module-directory (expand-file-name "lisp" user-emacs-directory)
   "Directory containing configuration 'modules'.")
@@ -66,6 +55,7 @@
     `(insert-code-from-file ,path)))
 
 (load-module "packages")
+(load-module "python")
 (load-module "appearance")
 (load-module "functions")
 (load-module "behavior")

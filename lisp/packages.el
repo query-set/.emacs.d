@@ -32,42 +32,6 @@
       (quote
        ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
 
-
-;; Python packages
-(use-package exec-path-from-shell
-  :ensure t
-  :config (exec-path-from-shell-copy-env "PATH"))
-
-(use-package elpy
-  :ensure t
-  :config (elpy-enable))
-
-(use-package jedi
-  :ensure t
-  :init
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (add-hook 'python-mode-hook 'jedi:ac-setup))
-
-(use-package py-autopep8
-  :ensure t
-  :hook ('elpy-mode-hook 'py-autopep8-enable-on-save))
-
-(use-package blacken
-  :ensure t)
-
-(require 'ein)
-(require 'ein-notebook)
-;; (require 'ein-subpackages)
-
-;; That shit is really annoying...
-;; (use-package flycheck
-;;   :ensure t
-;;   :init (global-flycheck-mode)
-;;   :hook (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake 'flymake--backend-state)
-;; (global-flycheck-mode 1)
-
 (use-package multiple-cursors
   :ensure t
   :config (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
@@ -76,29 +40,9 @@
   :ensure t
   :bind ("C-q" . avy-goto-char))
 
-;; (use-package company
-;;   :bind (("C-." . company-complete))
-;;   :diminish company-mode
-;;   :custom
-;;   (company-dabbrev-downcase nil "Don't downcase returned candidates.")
-;;   (company-show-numbers t "Numbers are helpful.")
-;;   (company-tooltip-limit 20 "The more the merrier.")
-;;   (company-abort-manual-when-too-short t "Be less enthusiastic about completion.")
-;;   :config
-;;   ;; Jump faster.
-;;   (setq company-idle-delay 0)
-;;   ;; Company mode in all buffers by default.
-;;   (add-hook 'after-init-hook 'global-company-mode)
-
-;;   ;; Use numbers 0-9 to select company completion candidates.
-;;   (let ((map company-active-map))
-;;     (mapc (lambda (x) (define-key map (format "%d" x)
-;;                         `(lambda () (interactive) (company-complete-number ,x))))
-;;           (number-sequence 0 9))))
-;; (global-set-key (kbd "C-c c") 'global-company-mode)
-
 (use-package docker-tramp
-  :ensure t)
+  :ensure t
+  :config (setq docker-tramp-use-names t))
 
 (use-package dockerfile-mode
   :ensure t)
@@ -115,7 +59,10 @@
         auto-revert-verbose nil))
 
 (use-package restclient
-  :ensure t)
+  :mode (("\\.http\\'" . restclient-mode)
+	 ("\\.https\\'" . restclient-mode))
+  :ensure t
+  :config (setq restclient-inhibit-cookies t))
 
 (use-package cider
   :ensure t)
@@ -143,4 +90,27 @@
          :domains ("github.com")
          :dirs ("~/work"))))
 
+(use-package magit-todos
+  :ensure t
+  :config (add-hook 'prog-mode-hook 'magit-todos-mode)) ;; TODO: make it working
+
+(use-package expand-region
+  :ensure t)
+(global-set-key (kbd "C-=") 'er/expand-region)  ; maybe to C-z someday?
+
+(use-package js2-mode
+  :ensure t)
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  ;; :init (setq markdown-command "multimarkdown"))
+  ;; (custom-set-variables
+  ;;  '(markdown-command "/usr/local/bin/pandoc"))
+  :init (setq markdown-command "/usr/bin/pandoc"))
+
+(provide 'packages)
 ;;; packages.el ends here

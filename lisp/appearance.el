@@ -32,10 +32,9 @@
 (defun enable-doom-modeline-icons (_frame)
   (setq doom-modeline-icon t))
 
-(add-hook 'after-make-frame-functions
-          #'enable-doom-modeline-icons)
+(add-hook 'after-make-frame-functions #'enable-doom-modeline-icons)
 
 (add-to-list 'default-frame-alist
-	     '(font . "SF Mono Powerline-11:light"))
+	     '(font . "SF Mono Powerline-11"))
 
 ;;; appearance.el ends here
